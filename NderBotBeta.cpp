@@ -51,11 +51,15 @@ void drawCell(int colonne, int range){
     c = colonne*Cell_Size;
     r = range*Cell_Size;
 
-    drawSquare(renderer, c, r, Cell_Size, 0, 0, 255);
 }
 //main
 int main()
 {
+    int enter = 1 | 0;
+    int pvj = 100;
+    int pvb = 100;
+
+    int attack = rand() % 20;
     int bossX = random(0, Grid_Size-1);
     int bossY = random(0, Grid_Size-1);
     window = SDL_CreateWindow("NderBotBeta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,Cell_Size * Grid_Size,Cell_Size * Grid_Size, SDL_WINDOW_SHOWN);
@@ -84,13 +88,30 @@ int main()
                 }
                 else if(q.key.keysym.sym == SDLK_d){
                     moveX+= Cell_Size;
+                }
 
 
 
                     if(moveX == (bossX*Cell_Size) && moveY == (bossY*Cell_Size)){
-                        SDL_CreateWindow("NderBotBeta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,Cell_Size * Grid_Size,Cell_Size * Grid_Size, SDL_WINDOW_SHOWN);
-            }
-                }
+                        printf("Voulez vous contre le boss ?\n");
+                        scanf("%i", &enter);
+                        if(enter == 1){
+                            int pvrj = pvj - attack;
+                            int pvrb = pvj - attack;
+                            while(pvj or pvb != 0){
+                            printf("Parfait\n");
+                            printf("Le boss vous attaque et vous enleve %i", attack);
+                            printf(" pv\n");
+                            printf("Il vous reste %i\n", pvj - attack);
+                            printf("Vous attaquez le boss et vous lui enlevez %i\n", attack);
+                            printf("Il reste %i\n pv au boss", pvb - attack);
+                            SDL_Delay(1000);
+                            }
+                        }
+                        else printf("Bon ben\n");
+
+                    }
+
             }
             else if(q.type == SDL_QUIT)
             {
