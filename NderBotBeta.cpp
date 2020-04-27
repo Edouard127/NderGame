@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <iostream>
-#include <stdlib.h>
+
 #include <SDL2/SDL.h>
 #ifdef __MINGW32__
 #undef main
@@ -11,7 +11,7 @@ using namespace std;
 SDL_Window* window;
 SDL_Renderer* renderer;
 SDL_Rect corps[200];
-bool eatApple = false;
+
 const int Cell_Size = 16;
 const int Grid_Size = 16;
 int x = corps[0].x;
@@ -84,6 +84,12 @@ int main()
                 }
                 else if(q.key.keysym.sym == SDLK_d){
                     moveX+= Cell_Size;
+
+
+
+                    if(moveX == (bossX*Cell_Size) && moveY == (bossY*Cell_Size)){
+                        SDL_CreateWindow("NderBotBeta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,Cell_Size * Grid_Size,Cell_Size * Grid_Size, SDL_WINDOW_SHOWN);
+            }
                 }
             }
             else if(q.type == SDL_QUIT)
@@ -97,12 +103,9 @@ int main()
         clock_t ecouleClock = nowClock - avantClock;
         float tempssecond = float(ecouleClock) / float(CLOCKS_PER_SEC);
 
-        if(moveX == (bossX*Cell_Size) && moveY == (bossY*Cell_Size)){
 
-        }
-        if(((moveX < -16+1 or moveY > 256-1)|| moveY < -16+1 or moveX > 256-1)){
-            loop = 0;
-        }
+
+
         SDL_SetRenderDrawColor(renderer, 0, 0 ,0, 255);
         SDL_RenderClear(renderer);
         //boss
@@ -115,11 +118,6 @@ int main()
         corps[0].h = Cell_Size;
         SDL_RenderFillRect(renderer, &corps[0]);
         SDL_RenderPresent(renderer);
-    }
-//Erreur possible
-    if(window == NULL){
-        printf("Erreur avec la fenetre");
-        return EXIT_FAILURE;
     }
 
     //if(q.type != SDL_QUIT && SDL_Quit == false)
