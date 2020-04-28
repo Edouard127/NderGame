@@ -55,11 +55,10 @@ void drawCell(int colonne, int range){
 //main
 int main()
 {
-    int enter = 1 | 0;
-    int pvj = 100;
-    int pvb = 100;
-
-    int attack = rand() % 20;
+    int Oui = 1;
+    int Non = 0;
+    int enter = Oui | Non;
+    int attack = random(0, Grid_Size-1);
     int bossX = random(0, Grid_Size-1);
     int bossY = random(0, Grid_Size-1);
     window = SDL_CreateWindow("NderBotBeta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,Cell_Size * Grid_Size,Cell_Size * Grid_Size, SDL_WINDOW_SHOWN);
@@ -96,21 +95,39 @@ int main()
                         printf("Voulez vous contre le boss ?\n");
                         scanf("%i", &enter);
                         if(enter == 1){
-                            int pvrj = pvj - attack;
-                            int pvrb = pvj - attack;
-                            while(pvj or pvb != 0){
+                            int pvj = 100;
+                            int pvb = 100;
+                            int combat = 1;
+
                             printf("Parfait\n");
-                            printf("Le boss vous attaque et vous enleve %i", attack);
-                            printf(" pv\n");
-                            printf("Il vous reste %i\n", pvj - attack);
-                            printf("Vous attaquez le boss et vous lui enlevez %i\n", attack);
-                            printf("Il reste %i\n pv au boss", pvb - attack);
+                            while(combat == 1){
+                                int pvrj = pvj -= attack;
+                                int pvrb = pvb -= attack;
+                            SDL_Delay(500);
+                            printf("Le boss vous attaque et vous enleve %ipv\n\n", attack);
+                            SDL_Delay(500);
+                            pvrj -= attack;
+                            printf("Il vous reste %ipv\n\n", pvrj);
+                            printf("Vous attaquez le boss et vous lui enlevez %i\n\n", attack);
+                            pvrb -= attack;
+                            printf("Il reste %ipv au boss\n\n", pvrb);
                             SDL_Delay(1000);
+                            if(pvrj <= 0){
+                                printf("Bravo tu as gagne\n\n");
+                                combat = 0;
+                                placeBoss(bossX*Cell_Size, bossY*Cell_Size);
+                            }
+                            else if(pvrb <= 0){
+                                printf("Tu as perdu :'(\n");
+                                combat = 0;
+                                loop = 0;
+                            }
                             }
                         }
                         else printf("Bon ben\n");
 
                     }
+
 
             }
             else if(q.type == SDL_QUIT)
@@ -119,6 +136,7 @@ int main()
             }
 
         }
+        int combat = 1;
 
         clock_t nowClock = clock();
         clock_t ecouleClock = nowClock - avantClock;
@@ -131,6 +149,9 @@ int main()
         SDL_RenderClear(renderer);
         //boss
         placeBoss(bossX*Cell_Size, bossY*Cell_Size);
+        if(combat){
+            placeBoss(bossX*Cell_Size, bossY*Cell_Size);
+        }
         //bonhomme
 
         corps[0].x = moveX;
