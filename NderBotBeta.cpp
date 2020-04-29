@@ -100,28 +100,33 @@ int main()
                             int combat = 1;
 
                             printf("Parfait\n");
-                            while(combat == 1){
+                            while(combat){
+                                attack = random(0, Grid_Size-1);
                                 int pvrj = pvj -= attack;
                                 int pvrb = pvb -= attack;
+
                             SDL_Delay(500);
                             printf("Le boss vous attaque et vous enleve %ipv\n\n", attack);
+                            attack = random(0, Grid_Size-1);
                             SDL_Delay(500);
                             pvrj -= attack;
                             printf("Il vous reste %ipv\n\n", pvrj);
                             printf("Vous attaquez le boss et vous lui enlevez %i\n\n", attack);
+                            attack = random(0, Grid_Size-1);
                             pvrb -= attack;
                             printf("Il reste %ipv au boss\n\n", pvrb);
                             SDL_Delay(1000);
-                            if(pvrj <= 0){
+                            if(pvrj < 1){
                                 printf("Bravo tu as gagne\n\n");
                                 combat = 0;
                                 placeBoss(bossX*Cell_Size, bossY*Cell_Size);
                             }
-                            else if(pvrb <= 0){
+                            else if(pvrb < 1){
                                 printf("Tu as perdu :'(\n");
                                 combat = 0;
                                 loop = 0;
                             }
+
                             }
                         }
                         else printf("Bon ben\n");
