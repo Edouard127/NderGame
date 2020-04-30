@@ -96,7 +96,7 @@ int main()
                     if(moveX == (bossX*Cell_Size) && moveY == (bossY*Cell_Size)){
                         printf("Voulez vous contre le boss ?\n");
                         scanf("%i", &enter);
-                        if(enter == 1){
+                        if(enter == Oui){
 
                             int pvj = 100;
                             int pvb = 100;
