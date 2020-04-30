@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <time.h>
 #include <iostream>
-
+//#include <guy.h>
+//#include <window.h>
 #include <SDL2/SDL.h>
 #ifdef __MINGW32__
 #undef main
 #endif
-
 using namespace std;
 SDL_Window* window;
 SDL_Renderer* renderer;
@@ -55,6 +55,8 @@ void drawCell(int colonne, int range){
 //main
 int main()
 {
+
+
     int Oui = 1;
     int Non = 0;
     int enter = Oui | Non;
@@ -95,24 +97,26 @@ int main()
                         printf("Voulez vous contre le boss ?\n");
                         scanf("%i", &enter);
                         if(enter == 1){
+
                             int pvj = 100;
                             int pvb = 100;
                             int combat = 1;
 
                             printf("Parfait\n");
                             while(combat){
+                                SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
                                 attack = random(0, Grid_Size-1);
                                 int pvrj = pvj -= attack;
                                 int pvrb = pvb -= attack;
 
                             SDL_Delay(500);
                             printf("Le boss vous attaque et vous enleve %ipv\n\n", attack);
-                            attack = random(0, Grid_Size-1);
+                            attack = random(10, Grid_Size-1);
                             SDL_Delay(500);
                             pvrj -= attack;
                             printf("Il vous reste %ipv\n\n", pvrj);
                             printf("Vous attaquez le boss et vous lui enlevez %i\n\n", attack);
-                            attack = random(0, Grid_Size-1);
+                            attack = random(10, Grid_Size-1);
                             pvrb -= attack;
                             printf("Il reste %ipv au boss\n\n", pvrb);
                             SDL_Delay(1000);
