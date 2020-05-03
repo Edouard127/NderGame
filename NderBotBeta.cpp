@@ -100,9 +100,23 @@ int main()
 
                             int pvj = 100;
                             int pvb = 100;
+                            int choix;
                             int combat = 1;
+                            int Fer = 2;
+                            int Platine = 4;
+                            int Diamant = 6;
 
                             printf("Parfait\n");
+                            printf("Choisissez votre armure\nFer\nPlatine\nDiamant");
+                            scanf("%i", &choix);
+                            if(choix == Fer){
+                                printf("Votre armure: Fer");
+                            }
+                            else if(choix == Platine){
+                                printf("Votre armure: Platine");
+                            }
+                            else if(choix == Diamant)
+                                printf("Votre armure: Diamant");
                             while(combat){
                                 SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
                                 attack = random(0, Grid_Size-1);
@@ -115,6 +129,7 @@ int main()
                             SDL_Delay(500);
                             pvrj -= attack;
                             printf("Il vous reste %ipv\n\n", pvrj);
+                            pvrj += choix;
                             printf("Vous attaquez le boss et vous lui enlevez %i\n\n", attack);
                             attack = random(10, Grid_Size-1);
                             pvrb -= attack;
@@ -133,7 +148,11 @@ int main()
 
                             }
                         }
-                        else printf("Bon ben\n");
+                        else if(enter == Non)
+                            printf("Bon ben\n");
+                        if(enter != Oui or Non){
+                            printf("Repete svp");
+                        }
 
                     }
 
@@ -154,11 +173,12 @@ int main()
 
 
 
+
         SDL_SetRenderDrawColor(renderer, 0, 0 ,0, 255);
         SDL_RenderClear(renderer);
         //boss
         placeBoss(bossX*Cell_Size, bossY*Cell_Size);
-        if(combat){
+        if(combat == 1){
             placeBoss(bossX*Cell_Size, bossY*Cell_Size);
         }
         //bonhomme
