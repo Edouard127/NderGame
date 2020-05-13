@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <time.h>
 #include <iostream>
-//#include <guy.h>
-//#include <window.h>
 #include <SDL2/SDL.h>
 #ifdef __MINGW32__
 #undef main
@@ -63,8 +61,11 @@ int main()
     int attack = random(0, Grid_Size-1);
     int bossX = random(0, Grid_Size-1);
     int bossY = random(0, Grid_Size-1);
+
     window = SDL_CreateWindow("NderBotBeta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,Cell_Size * Grid_Size,Cell_Size * Grid_Size, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
+
 
 
     srand(time(0));
@@ -97,6 +98,7 @@ int main()
                         printf("Voulez vous contre le boss ?\n");
                         scanf("%i", &enter);
                         if(enter == Oui){
+
 
                             int pvj = 100;
                             int pvb = 100;
