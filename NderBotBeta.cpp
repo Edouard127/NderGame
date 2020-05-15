@@ -10,19 +10,19 @@ SDL_Window* window;
 SDL_Renderer* renderer;
 SDL_Rect corps[200];
 
-const int Cell_Size = 16;
+const int Cell_Size = 16; //La grille de jeu
 const int Grid_Size = 16;
 int x = corps[0].x;
 int y = corps[0].y;
 int dir;
 int c = 0;
 int r = 0;
-int moveX = (Cell_Size*Grid_Size)/2, moveY = (Cell_Size*Grid_Size)/2;
+int moveX = (Cell_Size*Grid_Size)/2, moveY = (Cell_Size*Grid_Size)/2; //les touche moveX, moveY
 int random(int min, int max){
     return rand() % (max-min+1)+min;
 }
 
-SDL_Rect drawSquare(SDL_Renderer* renderer,  int x, int y, int w, Uint8 r, Uint8 g, Uint8 b){
+SDL_Rect drawSquare(SDL_Renderer* renderer,  int x, int y, int w, Uint8 r, Uint8 g, Uint8 b){ //Un bordel de carré
     SDL_SetRenderDrawColor(renderer, r, g, b, 255);
     SDL_Rect carre;
     carre.x = x;
@@ -33,7 +33,7 @@ SDL_Rect drawSquare(SDL_Renderer* renderer,  int x, int y, int w, Uint8 r, Uint8
     return carre;
 }
 
-SDL_Rect placeBoss(int x, int y){
+SDL_Rect placeBoss(int x, int y){ //CE qui place le boss
 
     SDL_Rect carre;
     carre = drawSquare(renderer, x, y, Cell_Size, 255, 0, 0);
@@ -43,8 +43,8 @@ SDL_Rect placeBoss(int x, int y){
 
 
 
-clock_t avantClock = 0;
-void drawCell(int colonne, int range){
+
+void drawCell(int colonne, int range){ //J'me souvien meme plus pourquoi c'est la
 
     c = colonne*Cell_Size;
     r = range*Cell_Size;
@@ -55,12 +55,12 @@ int main()
 {
 
 
-    int Oui = 1;
-    int Non = 0;
-    int enter = Oui | Non;
-    int attack = random(0, Grid_Size-1);
-    int bossX = random(0, Grid_Size-1);
-    int bossY = random(0, Grid_Size-1);
+    int Oui = 1;//les choix pour le jeu
+    int Non = 0;//les choix pour le jeu
+    int enter = Oui | Non;//les choix pour le jeu
+    int attack = random(0, Grid_Size-1); //Le nombre de dégat
+    int bossX = random(0, Grid_Size-1); //Position du boss
+    int bossY = random(0, Grid_Size-1); //Position du boss
 
     window = SDL_CreateWindow("NderBotBeta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,Cell_Size * Grid_Size,Cell_Size * Grid_Size, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -97,13 +97,13 @@ int main()
                     if(moveX == (bossX*Cell_Size) && moveY == (bossY*Cell_Size)){
                         printf("Voulez vous contre le boss ?\n");
                         scanf("%i", &enter);
-                        if(enter == Oui){
+                        if(enter == Oui){ //Si la réponse est oui, le jeu commence
 
 
-                            int pvj = 100;
-                            int pvb = 100;
-                            int choix;
-                            int combat = 1;
+                            int pvj = 100; //pvjoueur
+                            int pvb = 100; //pvboss
+                            int choix; //choix d'armure
+                            int combat = 1; //Por la loop
                             int Fer = 2;
                             int Platine = 4;
                             int Diamant = 6;
@@ -121,23 +121,24 @@ int main()
                                 printf("Votre armure: Diamant");
                             while(combat){
                                 SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-                                attack = random(0, Grid_Size-1);
-                                int pvrj = pvj -= attack;
-                                int pvrb = pvb -= attack;
+                                attack = random(0, Grid_Size-1); //Redéfini attack
+                                int pvrj = pvj -= attack; //pvjr = pvrestantjoueur
+                                int pvrb = pvb -= attack; //pvrb = pvrestantboss
 
                             SDL_Delay(500);
                             printf("Le boss vous attaque et vous enleve %ipv\n\n", attack);
                             attack = random(10, Grid_Size-1);
                             SDL_Delay(500);
                             pvrj -= attack;
+                            pvrj += choix; //Va remettre des pv en fonction de l'armure
                             printf("Il vous reste %ipv\n\n", pvrj);
-                            pvrj += choix;
+
                             printf("Vous attaquez le boss et vous lui enlevez %i\n\n", attack);
                             attack = random(10, Grid_Size-1);
                             pvrb -= attack;
                             printf("Il reste %ipv au boss\n\n", pvrb);
                             SDL_Delay(1000);
-                            if(pvrj < 1){
+                            if(pvrj < 1){ //DE ICI!!!!!!!!!!!!!!!!
                                 printf("Bravo tu as gagne\n\n");
                                 combat = 0;
                                 placeBoss(bossX*Cell_Size, bossY*Cell_Size);
@@ -146,15 +147,13 @@ int main()
                                 printf("Tu as perdu :'(\n");
                                 combat = 0;
                                 loop = 0;
-                            }
+                            } //A ICI!!!!!!!!!!!!!!!!!!, y'a un bug
 
                             }
                         }
                         else if(enter == Non)
                             printf("Bon ben\n");
-                        if(enter != Oui or Non){
-                            printf("Repete svp");
-                        }
+
 
                     }
 
@@ -168,14 +167,11 @@ int main()
         }
         int combat = 1;
 
-        clock_t nowClock = clock();
-        clock_t ecouleClock = nowClock - avantClock;
-        float tempssecond = float(ecouleClock) / float(CLOCKS_PER_SEC);
 
 
 
 
-
+//Le reste pas besoin de toucher a sa
         SDL_SetRenderDrawColor(renderer, 0, 0 ,0, 255);
         SDL_RenderClear(renderer);
         //boss
