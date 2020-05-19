@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <time.h>
 #include <iostream>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <graphic.h>
+#include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL.h>
 #ifdef __MINGW32__
 #undef main
@@ -99,11 +103,21 @@ int main()
                         scanf("%i", &enter);
                         if(enter == Oui){ //Si la réponse est oui, le jeu commence
 
+                             // Initialize SDL video and audio systems
+                             SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
+                             // Initialize SDL mixer
+                             Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+
+
+                            Mix_Music *backgroundSound = Mix_LoadMUS("battle.mp3");
+
+                            Mix_PlayMusic(backgroundSound, -1);
+
 
                             int pvj = 100; //pvjoueur
                             int pvb = 100; //pvboss
                             int choix; //choix d'armure
-                            int combat = 1; //Por la loop
+                            int combat = 1; //Pour la loop
                             int Fer = 2;
                             int Platine = 4;
                             int Diamant = 6;
@@ -147,14 +161,15 @@ int main()
                                 printf("Tu as perdu :'(\n");
                                 combat = 0;
                                 loop = 0;
-                            } //A ICI!!!!!!!!!!!!!!!!!!, y'a un bug
+                            } //A ICI!!!!!!!!!!!!!!!!!!, y'a un bug, sa arrete le jeu en disant tu as reussi quand sa atteint les nombres négatifs
 
                             }
                         }
                         else if(enter == Non)
                             printf("Bon ben\n");
 
-
+                       Mix_HaltMusic();
+                       Mix_CloseAudio();
                     }
 
 
@@ -165,20 +180,17 @@ int main()
             }
 
         }
-        int combat = 1;
 
 
 
 
 
-//Le reste pas besoin de toucher a sa
+
         SDL_SetRenderDrawColor(renderer, 0, 0 ,0, 255);
         SDL_RenderClear(renderer);
         //boss
         placeBoss(bossX*Cell_Size, bossY*Cell_Size);
-        if(combat == 1){
-            placeBoss(bossX*Cell_Size, bossY*Cell_Size);
-        }
+
         //bonhomme
 
         corps[0].x = moveX;
