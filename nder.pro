@@ -28,6 +28,7 @@ CONFIG += console
 QT += widgets
 INCLUDEPATH += include
 LIBS += -L$$PWD/lib -lmingw32 -mwindows -lSDL2main -lSDL2
+
 CONFIG(debug, debug|release){
 DESTDIR = $$PWD/debug
 }
@@ -54,3 +55,14 @@ unix|win32: LIBS += -L$$PWD/lib/ -lSDL2_mixer
 
 INCLUDEPATH += $$PWD/include
 DEPENDPATH += $$PWD/include
+
+
+unix|win32: LIBS += -L$$PWD/debug/x86_64-w64-mingw32/lib/ -llibSDL2_image.dll
+
+INCLUDEPATH += $$PWD/debug/x86_64-w64-mingw32/include
+DEPENDPATH += $$PWD/debug/x86_64-w64-mingw32/include
+
+unix|win32: LIBS += -L$$PWD/debug/x86_64-w64-mingw32/lib/ -lSDL2_image
+
+INCLUDEPATH += $$PWD/debug/x86_64-w64-mingw32/include
+DEPENDPATH += $$PWD/debug/x86_64-w64-mingw32/include
