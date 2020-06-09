@@ -129,7 +129,7 @@ int main(void)
     int gold = 0;
     int obsi = 0;
 
-    window = SDL_CreateWindow("NderBotBeta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,Cell_Size * Grid_Size,Cell_Size * Grid_Size, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("NderBot", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,Cell_Size * Grid_Size,Cell_Size * Grid_Size, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
 
@@ -272,20 +272,20 @@ int main(void)
 
 
                             cout << "Le boss vous attaque et vous enleve " << attack << "pv\n" << endl;
-                            SDL_Delay(500);
+
                             attack = random(10, Grid_Size-1);
-                            SDL_Delay(500);
+
                             pvrj -= attack;
                             pvrj += choix; //Va remettre des pv en fonction de l'armure
                             cout << "Il vous reste " << pvrj << " pv\n" << endl;
-                            SDL_Delay(500);
+
                             cout << "Vous attaquez le boss " << boss << " et enlevez " << attack << " au boss\n" << endl;
-                            SDL_Delay(500);
+
 
                             attack = random(10, Grid_Size-1);
                             pvrb -= attack;
                             cout << "Il reste " << pvrb << " pv au boss\n" << endl;
-                            SDL_Delay(500);
+
 
                             if(pvrj < 1){
                                 cout << "Tu as perdu(e)" << endl;
