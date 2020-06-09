@@ -57,12 +57,36 @@ INCLUDEPATH += $$PWD/include
 DEPENDPATH += $$PWD/include
 
 
-unix|win32: LIBS += -L$$PWD/debug/x86_64-w64-mingw32/lib/ -llibSDL2_image.dll
 
-INCLUDEPATH += $$PWD/debug/x86_64-w64-mingw32/include
-DEPENDPATH += $$PWD/debug/x86_64-w64-mingw32/include
 
-unix|win32: LIBS += -L$$PWD/debug/x86_64-w64-mingw32/lib/ -lSDL2_image
+unix|win32: LIBS += -L$$PWD/debug/texte/lib/ -llibSDL2_ttf.dll
 
-INCLUDEPATH += $$PWD/debug/x86_64-w64-mingw32/include
-DEPENDPATH += $$PWD/debug/x86_64-w64-mingw32/include
+INCLUDEPATH += $$PWD/debug/texte/include
+DEPENDPATH += $$PWD/debug/texte/include
+
+unix|win32: LIBS += -L$$PWD/debug/texte/lib/ -lSDL2_ttf
+
+INCLUDEPATH += $$PWD/debug/texte/include
+DEPENDPATH += $$PWD/debug/texte/include
+
+unix|win32: LIBS += -L$$PWD/debug/SDL_image/lib/ -llibSDL2_image.dll
+
+INCLUDEPATH += $$PWD/debug/SDL_image/include
+DEPENDPATH += $$PWD/debug/SDL_image/include
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/debug/SDL_image/lib/ -lSDL2_image
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/debug/SDL_image/lib/ -lSDL2_image
+else:unix: LIBS += -L$$PWD/debug/SDL_image/lib/ -lSDL2_image
+
+INCLUDEPATH += $$PWD/debug/SDL_image/include
+DEPENDPATH += $$PWD/debug/SDL_image/include
+
+unix|win32: LIBS += -L$$PWD/debug/SDL_Net/lib/ -llibSDL2_net.dll
+
+INCLUDEPATH += $$PWD/debug/SDL_Net/include
+DEPENDPATH += $$PWD/debug/SDL_Net/include
+
+unix|win32: LIBS += -L$$PWD/debug/SDL_Net/lib/ -lSDL2_net
+
+INCLUDEPATH += $$PWD/debug/SDL_Net/include
+DEPENDPATH += $$PWD/debug/SDL_Net/include
