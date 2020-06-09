@@ -4,7 +4,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <fstream>
+#include <SDL2/SDL_net.h>
 #include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
 #include <string>
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL.h>
@@ -14,6 +16,7 @@ SDL_Window *window = NULL;
 SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
 SDL_Surface *image = IMG_Load("a.PNG");
 SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, image);
+TTF_Font *police = NULL;
 #ifdef __MINGW32__
 #undef main
 #endif
@@ -47,7 +50,7 @@ SDL_Rect drawSquare(SDL_Renderer* renderer,  int x, int y, int w, Uint8 r, Uint8
     return carre;
 }
 
-SDL_Rect placeBoss(int x, int y){ //CE qui place le boss
+SDL_Rect placeBoss(int x, int y){ //Ce qui place le boss
 
     SDL_Rect carre;
     carre = drawSquare(renderer, x, y, Cell_Size, 255, 0, 0);
@@ -66,34 +69,41 @@ void drawCell(int colonne, int range){ //J'me souvien meme plus pourquoi c'est l
 }
 
 
+ifstream lireFichier("save.sav"); //lire
 
+string const enderSav("save.sav"); //ecrire
+ofstream ecritFicher(enderSav.c_str());
 //main
-int main(int argc, char* args[])
+int main(void)
 {
-   ifstream fichier("sav.sav");
 
-   if(fichier)
+
+
+   if(lireFichier)
    {
       //L'ouverture s'est bien passée, on peut donc lire
        printf("La sauvegarde a bien ete lu\n");
 
       string ligne; //Une variable pour stocker les lignes lues
 
-      while(getline(fichier, ligne)) //Tant qu'on n'est pas à la fin, on lit
+      while(getline(lireFichier, ligne)) //Tant qu'on n'est pas à la fin, on lit
       {
-          taille = fichier.tellg();
-          fichier.seekg(0, ios::end);
-         cout << ligne << endl;
-
-
-
-         cout << "Taille du fichier : " << taille << " octets." << endl;
+          taille = lireFichier.tellg();
+          cout << ligne << endl;
+          cout << "Le fichier fait " << taille << " octets" << endl;
 
       }
+      if(taille == 0)
+      {
+          cout << "Attention le fichier est vide" << endl;
+      }
+
    }
    else
    {
       cout << "ERREUR: Impossible d'ouvrir le fichier en lecture." << endl;
+      cout << "Veuillez pesez sur f pour sauvegarder" << endl;
+
    }
 
 
@@ -101,13 +111,23 @@ int main(int argc, char* args[])
 
 
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
-    int save = 3;
-    int Oui = 1;//les choix pour le jeu
-    int Non = 0;//les choix pour le jeu
-    int enter = Oui | Non | save;//les choix pour le jeu
+
+    bool Oui = 0;//les choix pour le jeu
+    int enter;//les choix pour le jeu
     int attack = random(0, Grid_Size-1); //Le nombre de dégat
     int bossX = random(0, Grid_Size-1); //Position du boss
     int bossY = random(0, Grid_Size-1); //Position du boss
+    int mana = 0;
+    int power = 0;
+    int level = 0;
+    int pvrj = pvj -= attack; //pvjr = pvrestantjoueur
+    int pvrb = pvb -= attack; //pvrb = pvrestantboss
+    int stone = 0;
+    int pp = 0;
+    int am = 0;
+    int iron = 0;
+    int gold = 0;
+    int obsi = 0;
 
     window = SDL_CreateWindow("NderBotBeta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,Cell_Size * Grid_Size,Cell_Size * Grid_Size, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -140,6 +160,9 @@ int main(int argc, char* args[])
 
 
 
+
+
+
     srand(time(0));
     int loop = 1;
     SDL_Event q;
@@ -166,17 +189,17 @@ int main(int argc, char* args[])
                 }
                 if(q.key.keysym.sym == SDLK_f)
                 {
-                string const enderSav("sav.sav");
-                ofstream ecritFicher(enderSav.c_str());
+
                 if(ecritFicher)
                 {
 
 
                     printf("Ecriture de la sauvegarde\n");
                     ecritFicher << "//Sauvegarde du jeu\\" << endl;
-                    ecritFicher << "pvj == " << pvj << endl;
+                    ecritFicher << pvj << endl;
 
-                    ecritFicher << "choix armure == " "NULL" << endl;
+                    ecritFicher << "" << endl;
+                    ecritFicher.close();
 
 
 
@@ -188,18 +211,28 @@ int main(int argc, char* args[])
                     printf("[DEBUG] > %s", SDL_GetError());
                 }
                 }
+                if(q.key.keysym.sym == SDLK_e)
+                {
+                    printf("Ton inventaire\nMana %i ||| PV %i ||| Energie %i\n--------------------\n", mana, pvrj, power);
+                    printf("Level %i\n--------------------\n", level);
+                    printf("Stone %i ||| Iron %i\n--------------------\nPerfect Prism %i ||| Gold %i\n--------------------\n", stone, iron, pp, gold);
+                    SDL_Delay(100);
+                    printf("Antimatter %i ||| Obsidian %i\n--------------------\n", am, obsi);
+                }
 
 
 
 
 
                     if(moveX == (bossX*Cell_Size) && moveY == (bossY*Cell_Size)){
+                        Oui = 1;
 
 
 
-                        printf("Voulez vous contre le boss ?\n");
+                        cout << "Voulez vous combattre le boss ? (T'es oblige mdr)" << endl;
                         scanf("%i", &enter);
-                        if(enter == Oui){ //Si la réponse est oui, le jeu commence
+                        if(Oui){ //Si la réponse est oui, le jeu commence
+
 
 
 
@@ -219,92 +252,54 @@ int main(int argc, char* args[])
 
 
 
-                            int combat = 1; //Pour la loop
-                            int attaque;
-                            int Fer = 2;
-                            int Platine = 4;
-                            int Diamant = 6;
-                            int bf;
-                            int cp;
-                            int lt;
-                            int ls;
-                            int taille;
-//                            int feu;
-//                            int glace;
-//                            int EnderBoss;
-                              int monstre;
-//                            attack = random(2, Grid_Size-1);
-//                            if(attack <= 4)
-//                            {
-//                                monstre = feu;
-//                            }
-//                            else if(attack == 10)
-//                            {
-//                                monstre = EnderBoss;
-//                            }
-//                            else {
-//                                monstre = glace;
-//                            }
 
-                            printf("Parfait\n");
-                            printf("Vous vous combattez contre le boss%i", monstre);
-                            printf("Choisissez votre armure\nFer\nPlatine\nDiamant");
-                            scanf("%i", &choix);
-                            if(choix == Fer){
-                                printf("Votre armure: Fer");
-                            }
-                            else if(choix == Platine){
-                                printf("Votre armure: Platine");
-                            }
-                            else if(choix == Diamant)
-                                printf("Votre armure: Diamant");
-                            while(combat){
+
+
+                            int boss = 0;
+
+                            cout << "Parfait" << endl;
+                            SDL_Delay(500);
+                            cout << "Vous vous combattez contre le boss\n " << boss << endl;
+
+                            while(Oui){
 
 
 
                                 attack = random(0, Grid_Size-1); //Redéfini attack
-                                int pvrj = pvj -= attack; //pvjr = pvrestantjoueur
-                                int pvrb = pvb -= attack; //pvrb = pvrestantboss
 
 
 
 
-                            printf("Le boss vous attaque et vous enleve %ipv\n\n", attack);
+
+                            cout << "Le boss vous attaque et vous enleve " << attack << "pv\n" << endl;
+                            SDL_Delay(500);
                             attack = random(10, Grid_Size-1);
                             SDL_Delay(500);
                             pvrj -= attack;
                             pvrj += choix; //Va remettre des pv en fonction de l'armure
-                            printf("Il vous reste %ipv\n\n", pvrj);
-                            printf("Choisissez votre attaque: Boule de feu(bf)%i, Coup de point(cp)%i,\nLame Tranchante(lt)%i, Lance de sandwich(ls)%i", bf, cp, lt, ls);
-                            scanf("%i", &attaque);
+                            cout << "Il vous reste " << pvrj << " pv\n" << endl;
+                            SDL_Delay(500);
+                            cout << "Vous attaquez le boss " << boss << " et enlevez " << attack << " au boss\n" << endl;
+                            SDL_Delay(500);
 
-
-                            printf("Vous utilisez l'attaque%i Et vous lui enlever%i\n\n", attaque, attack);
-                            if(attaque == lt)
-                            {
-                                printf("Ce n'est pas tres efficace :/");
-                                SDL_Delay(500);
-                                printf("Mais le monstre de %i a aime le repas, +10 de coolitude", monstre);
-                            }
                             attack = random(10, Grid_Size-1);
                             pvrb -= attack;
-                            printf("Il reste %ipv au boss\n\n", pvrb);
-                            SDL_Delay(1000);
-                            if(pvrj < 1){ //DE ICI!!!!!!!!!!!!!!!!
-                                printf("Bravo tu as gagne\n\n");
-                                combat = 0;
+                            cout << "Il reste " << pvrb << " pv au boss\n" << endl;
+                            SDL_Delay(500);
+
+                            if(pvrj < 1){
+                                cout << "Tu as perdu(e)" << endl;
+                                Oui = 0;
                                 placeBoss(bossX*Cell_Size, bossY*Cell_Size);
                             }
                             else if(pvrb < 1){
-                                printf("Tu as perdu :'(\n");
-                                combat = 0;
-
-                            } //A ICI!!!!!!!!!!!!!!!!!!, y'a un bug, sa arrete le jeu en disant tu as reussi quand sa atteint les nombres négatifs
+                                cout << "Tu as gagné(e)" << endl;
+                                Oui = 0;
 
                             }
+                            }
                         }
-                        else if(enter == Non)
-                            printf("Bon ben\n");
+
 
                        Mix_HaltMusic();
                        Mix_CloseAudio();
