@@ -128,6 +128,21 @@ int main(void)
     int iron = 0;
     int gold = 0;
     int obsi = 0;
+    int ruby = 0;
+    int emerald = 0;
+    int sapphire = 0;
+    int cobalt = 0;
+    int mithril = 0;
+    int adamantite = 0;
+    int coal = 0;
+    int uranium = 0;
+    int plutonium = 0;
+    int pick = 0;
+    int sword = 0;
+    int shield = 0;
+    int fight_level = 0;
+    int golem = 0;
+    int pickaxe_name = 0;
 
     window = SDL_CreateWindow("NderBot", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,Cell_Size * Grid_Size,Cell_Size * Grid_Size, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -218,6 +233,10 @@ int main(void)
                     printf("Stone %i ||| Iron %i\n--------------------\nPerfect Prism %i ||| Gold %i\n--------------------\n", stone, iron, pp, gold);
                     SDL_Delay(100);
                     printf("Antimatter %i ||| Obsidian %i\n--------------------\n", am, obsi);
+                    printf("Ruby %i ||| Cobalt %i ||| Coal %i\n--------------------\n", ruby, cobalt, coal);
+                    printf("Emerald %i ||| Mithril %i ||| Uranium %i\n--------------------\n", emerald, mithril, uranium);
+                    printf("Sapphire %i ||| Adamantite %i ||| Plutonium %i\n--------------------\n", sapphire, adamantite, plutonium);
+                    printf("Pickaxe - ")
                 }
 
 
