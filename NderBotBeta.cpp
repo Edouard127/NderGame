@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <time.h>
+#include <ios>
 #include <iostream>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -31,7 +32,7 @@ int y = corps[0].y;
 int dir;
 int c = 0;
 int r = 0;
-int pvj = 100; //pvjoueur
+int pvj = 150; //pvjoueur
 int pvb = 100; //pvboss
 int choix; //choix d'armure
 int moveX = (Cell_Size*Grid_Size)/2, moveY = (Cell_Size*Grid_Size)/2; //les touche moveX, moveY
@@ -68,19 +69,15 @@ void drawCell(int colonne, int range){ //J'me souvien meme plus pourquoi c'est l
 
 }
 
-
-ifstream lireFichier("save.sav"); //lire
-
-string const enderSav("save.sav"); //ecrire
-ofstream ecritFicher(enderSav.c_str());
 //main
 int main(void)
 {
 
 
-
+   ifstream lireFichier("save.sav", ios::app); //lire
    if(lireFichier)
    {
+
       //L'ouverture s'est bien passée, on peut donc lire
        printf("La sauvegarde a bien ete lu\n");
 
@@ -93,12 +90,11 @@ int main(void)
           cout << "Le fichier fait " << taille << " octets" << endl;
 
       }
-      if(taille == 0)
-      {
-          cout << "Attention le fichier est vide" << endl;
-      }
+
+
 
    }
+
    else
    {
       cout << "ERREUR: Impossible d'ouvrir le fichier en lecture." << endl;
@@ -142,7 +138,6 @@ int main(void)
     int shield = 0;
     int fight_level = 0;
     int golem = 0;
-    int pickaxe_name = 0;
 
     window = SDL_CreateWindow("NderBot", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,Cell_Size * Grid_Size,Cell_Size * Grid_Size, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -177,7 +172,7 @@ int main(void)
 
 
 
-
+int help = 0;
     srand(time(0));
     int loop = 1;
     SDL_Event q;
@@ -202,9 +197,19 @@ int main(void)
                 else if(q.key.keysym.sym == SDLK_d){
                     moveX+= Cell_Size;
                 }
+                 if(moveX && moveY)
+                 {
+                     scanf("%i", &enter);
+                     if(enter == help)
+                     {
+                         printf("Y'a pas d'aide");
+                     }
+                 }
                 if(q.key.keysym.sym == SDLK_f)
                 {
 
+                    string const enderSav("save.sav", ios::app); //ecrire
+                    ofstream ecritFicher(enderSav.c_str());
                 if(ecritFicher)
                 {
 
@@ -214,7 +219,7 @@ int main(void)
                     ecritFicher << pvj << endl;
 
                     ecritFicher << "" << endl;
-                    ecritFicher.close();
+
 
 
 
@@ -225,6 +230,7 @@ int main(void)
                 {
                     printf("[DEBUG] > %s", SDL_GetError());
                 }
+
                 }
                 if(q.key.keysym.sym == SDLK_e)
                 {
@@ -236,7 +242,7 @@ int main(void)
                     printf("Ruby %i ||| Cobalt %i ||| Coal %i\n--------------------\n", ruby, cobalt, coal);
                     printf("Emerald %i ||| Mithril %i ||| Uranium %i\n--------------------\n", emerald, mithril, uranium);
                     printf("Sapphire %i ||| Adamantite %i ||| Plutonium %i\n--------------------\n", sapphire, adamantite, plutonium);
-                    printf("Pickaxe - ")
+                    printf("Pickaxe - ");
                 }
 
 
@@ -314,6 +320,7 @@ int main(void)
                             else if(pvrb < 1){
                                 cout << "Tu as gagné(e)" << endl;
                                 Oui = 0;
+                                stone += attack = random(100, Grid_Size-1);
 
                             }
                             }
