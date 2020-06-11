@@ -306,7 +306,7 @@ int help = 0;
 
                             attack = random(10, Grid_Size-1);
                             pvrb -= attack;
-                            cout << "Il reste " << pvrb < " pv au boss\n" << endl;
+                            cout << "Il reste " << pvrb << " pv au boss\n" << endl;
                             SDL_Delay(1000);
 
 
