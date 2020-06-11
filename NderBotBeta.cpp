@@ -138,6 +138,7 @@ int main(void)
     int shield = 0;
     int fight_level = 0;
     int golem = 0;
+    int easter = 1;
 
     window = SDL_CreateWindow("NderBot", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,Cell_Size * Grid_Size,Cell_Size * Grid_Size, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -197,14 +198,8 @@ int help = 0;
                 else if(q.key.keysym.sym == SDLK_d){
                     moveX+= Cell_Size;
                 }
-                 if(moveX && moveY)
-                 {
-                     scanf("%i", &enter);
-                     if(enter == help)
-                     {
-                         printf("Y'a pas d'aide");
-                     }
-                 }
+
+
                 if(q.key.keysym.sym == SDLK_f)
                 {
 
@@ -274,6 +269,7 @@ int help = 0;
                                     SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "[DEBUG] > %s", SDL_GetError());
                                     return EXIT_FAILURE;
                                 }
+                            SDL_Delay(1000);
 
 
 
@@ -297,6 +293,7 @@ int help = 0;
 
 
                             cout << "Le boss vous attaque et vous enleve " << attack << "pv\n" << endl;
+                            SDL_Delay(1000);
 
                             attack = random(10, Grid_Size-1);
 
@@ -305,11 +302,12 @@ int help = 0;
                             cout << "Il vous reste " << pvrj << " pv\n" << endl;
 
                             cout << "Vous attaquez le boss " << boss << " et enlevez " << attack << " au boss\n" << endl;
-
+                            SDL_Delay(1000);
 
                             attack = random(10, Grid_Size-1);
                             pvrb -= attack;
-                            cout << "Il reste " << pvrb << " pv au boss\n" << endl;
+                            cout << "Il reste " << pvrb < " pv au boss\n" << endl;
+                            SDL_Delay(1000);
 
 
                             if(pvrj < 1){
@@ -318,13 +316,24 @@ int help = 0;
                                 placeBoss(bossX*Cell_Size, bossY*Cell_Size);
                             }
                             else if(pvrb < 1){
-                                cout << "Tu as gagné(e)" << endl;
+                                cout << "Tu as gagne(e)" << endl;
                                 Oui = 0;
                                 stone += attack = random(100, Grid_Size-1);
 
                             }
                             }
                         }
+
+                        else if(enter == easter)
+                    {
+                            Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+
+
+                           Mix_Music *backgroundSound = Mix_LoadMUS("battle.mp3");
+
+                           Mix_PlayMusic(backgroundSound, -1);
+                     }
+
 
 
                        Mix_HaltMusic();
