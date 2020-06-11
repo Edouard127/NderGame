@@ -74,7 +74,7 @@ int main(void)
 {
 
 
-   ifstream lireFichier("save.sav", ios::app); //lire
+   ifstream lireFichier("s", ios::app); //lire
    if(lireFichier)
    {
 
@@ -87,9 +87,10 @@ int main(void)
       {
           taille = lireFichier.tellg();
           cout << ligne << endl;
-          cout << "Le fichier fait " << taille << " octets" << endl;
+
 
       }
+      cout << "Le fichier fait " << taille << " octets" << endl;
 
 
 
@@ -113,7 +114,7 @@ int main(void)
     int attack = random(0, Grid_Size-1); //Le nombre de dégat
     int bossX = random(0, Grid_Size-1); //Position du boss
     int bossY = random(0, Grid_Size-1); //Position du boss
-    int mana = 0;
+    int mana = 10;
     int power = 0;
     int level = 0;
     int pvrj = pvj -= attack; //pvjr = pvrestantjoueur
@@ -138,7 +139,14 @@ int main(void)
     int shield = 0;
     int fight_level = 0;
     int golem = 0;
-    int easter = 1;
+    int house = 0;
+    int ring = 0;
+    int gen = 0;
+    int fish = 0;
+    int mine = 0;
+    int mi = 0;
+    int mineall = 0;
+    int mia = 0;
 
     window = SDL_CreateWindow("NderBot", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,Cell_Size * Grid_Size,Cell_Size * Grid_Size, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -173,7 +181,7 @@ int main(void)
 
 
 
-int help = 0;
+
     srand(time(0));
     int loop = 1;
     SDL_Event q;
@@ -198,12 +206,31 @@ int help = 0;
                 else if(q.key.keysym.sym == SDLK_d){
                     moveX+= Cell_Size;
                 }
+                if(q.key.keysym.sym == SDLK_c)
+                {
+                    cout << "Entrez votre commande" << endl;
+                    scanf("%i", &enter);
+
+                    if(enter == (mine or mi) && mana > 0)
+                    {
+                        stone += random(20, Grid_Size-1);
+                        mana -= 1;
+
+                    }
+                    else if(enter == (mineall or mia) && mana > 0)
+                    {
+                        stone +=
+                        mana -= 100;
+                    }
+                    else cout << "Tu n'a plus assez de mana" << endl;
+
+                }
 
 
                 if(q.key.keysym.sym == SDLK_f)
                 {
 
-                    string const enderSav("save.sav", ios::app); //ecrire
+                    string const enderSav("s", ios::app); //ecrire
                     ofstream ecritFicher(enderSav.c_str());
                 if(ecritFicher)
                 {
@@ -211,9 +238,33 @@ int help = 0;
 
                     printf("Ecriture de la sauvegarde\n");
                     ecritFicher << "//Sauvegarde du jeu\\" << endl;
+                    ecritFicher << "//Experience du joueur\\" << endl;
+                    ecritFicher << mana << endl;
                     ecritFicher << pvj << endl;
+                    ecritFicher << power << endl;
+                    ecritFicher << level << endl;
+                    ecritFicher << "Ressource joueur" << endl;
+                    ecritFicher << stone << endl;
+                    ecritFicher << iron << endl;
+                    ecritFicher << pp << endl;
+                    ecritFicher << gold << endl;
+                    ecritFicher << am << endl;
+                    ecritFicher << obsi << endl;
+                    ecritFicher << ruby << endl;
+                    ecritFicher << cobalt << endl;
+                    ecritFicher << coal << endl;
+                    ecritFicher << emerald << endl;
+                    ecritFicher << mithril << endl;
+                    ecritFicher << uranium << endl;
+                    ecritFicher << sapphire << endl;
+                    ecritFicher << adamantite << endl;
+                    ecritFicher << plutonium << endl;
+                    ecritFicher << pick << endl;
+                    ecritFicher << house << endl;
+                    ecritFicher << gen << endl;
+                    ecritFicher << fish << endl;
 
-                    ecritFicher << "" << endl;
+
 
 
 
@@ -237,7 +288,8 @@ int help = 0;
                     printf("Ruby %i ||| Cobalt %i ||| Coal %i\n--------------------\n", ruby, cobalt, coal);
                     printf("Emerald %i ||| Mithril %i ||| Uranium %i\n--------------------\n", emerald, mithril, uranium);
                     printf("Sapphire %i ||| Adamantite %i ||| Plutonium %i\n--------------------\n", sapphire, adamantite, plutonium);
-                    printf("Pickaxe - ");
+                    printf("Pickaxe - Level %i ||| House - Level %i ||| Ring - Level %i\n--------------------\n", pick, house, ring);
+                    printf("Generator - Level %i ||| Fishing Rod - Level %i\n--------------------\n", gen, fish);
                 }
 
 
@@ -258,18 +310,18 @@ int help = 0;
 
 
 
-                             Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+//                             Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 
 
-                            Mix_Music *backgroundSound = Mix_LoadMUS("battle.mp3");
+//                            Mix_Music *backgroundSound = Mix_LoadMUS("battle.mp3");
 
-                            Mix_PlayMusic(backgroundSound, -1);
-                            if(SDL_Init(SDL_INIT_VIDEO) < 0)
-                                {
-                                    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "[DEBUG] > %s", SDL_GetError());
-                                    return EXIT_FAILURE;
-                                }
-                            SDL_Delay(1000);
+//                            Mix_PlayMusic(backgroundSound, -1);
+//                            if(SDL_Init(SDL_INIT_VIDEO) < 0)
+//                                {
+//                                    SDL_LogError(SDL_LOG_CATEGORY_APPLICATION, "[DEBUG] > %s", SDL_GetError());
+//                                    return EXIT_FAILURE;
+//                                }
+
 
 
 
@@ -278,7 +330,7 @@ int help = 0;
 
                             int boss = 0;
 
-                            cout << "Parfait" << endl;
+
                             SDL_Delay(500);
                             cout << "Vous vous combattez contre le boss\n " << boss << endl;
 
@@ -293,7 +345,7 @@ int help = 0;
 
 
                             cout << "Le boss vous attaque et vous enleve " << attack << "pv\n" << endl;
-                            SDL_Delay(1000);
+
 
                             attack = random(10, Grid_Size-1);
 
@@ -302,12 +354,12 @@ int help = 0;
                             cout << "Il vous reste " << pvrj << " pv\n" << endl;
 
                             cout << "Vous attaquez le boss " << boss << " et enlevez " << attack << " au boss\n" << endl;
-                            SDL_Delay(1000);
+
 
                             attack = random(10, Grid_Size-1);
                             pvrb -= attack;
                             cout << "Il reste " << pvrb << " pv au boss\n" << endl;
-                            SDL_Delay(1000);
+
 
 
                             if(pvrj < 1){
@@ -318,21 +370,21 @@ int help = 0;
                             else if(pvrb < 1){
                                 cout << "Tu as gagne(e)" << endl;
                                 Oui = 0;
-                                stone += attack = random(100, Grid_Size-1);
+
 
                             }
                             }
                         }
 
-                        else if(enter == easter)
-                    {
-                            Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
+//                        else if(enter == easter)
+//                    {
+//                            Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
 
 
-                           Mix_Music *backgroundSound = Mix_LoadMUS("battle.mp3");
+//                           Mix_Music *backgroundSound = Mix_LoadMUS("battle.mp3");
 
-                           Mix_PlayMusic(backgroundSound, -1);
-                     }
+//                           Mix_PlayMusic(backgroundSound, -1);
+//                     }
 
 
 
