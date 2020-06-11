@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <fstream>
+#include <debug/save.h>
 #include <SDL2/SDL_net.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -32,8 +33,6 @@ int y = corps[0].y;
 int dir;
 int c = 0;
 int r = 0;
-int pvj = 150; //pvjoueur
-int pvb = 100; //pvboss
 int choix; //choix d'armure
 int moveX = (Cell_Size*Grid_Size)/2, moveY = (Cell_Size*Grid_Size)/2; //les touche moveX, moveY
 int random(int min, int max){
@@ -74,7 +73,7 @@ int main(void)
 {
 
 
-   ifstream lireFichier("s", ios::app); //lire
+   ifstream lireFichier("save.h"); //lire
    if(lireFichier)
    {
 
@@ -89,6 +88,9 @@ int main(void)
           cout << ligne << endl;
 
 
+
+
+
       }
       cout << "Le fichier fait " << taille << " octets" << endl;
 
@@ -98,8 +100,8 @@ int main(void)
 
    else
    {
-      cout << "ERREUR: Impossible d'ouvrir le fichier en lecture." << endl;
-      cout << "Veuillez pesez sur f pour sauvegarder" << endl;
+      cout << "[DEBUG]: Impossible de trouver le ficher ou il est deja ouvert" << endl;
+      cout << "[DEBUG]: Veuillez sauvegarder ou fermer le ficher ouvert" << endl;
 
    }
 
@@ -117,6 +119,8 @@ int main(void)
     int mana = 10;
     int power = 0;
     int level = 0;
+    int pvj = 150; //pvjoueur
+    int pvb = 100; //pvboss
     int pvrj = pvj -= attack; //pvjr = pvrestantjoueur
     int pvrb = pvb -= attack; //pvrb = pvrestantboss
     int stone = 0;
@@ -230,7 +234,7 @@ int main(void)
                 if(q.key.keysym.sym == SDLK_f)
                 {
 
-                    string const enderSav("s", ios::app); //ecrire
+                    string const enderSav("save.h"); //ecrire
                     ofstream ecritFicher(enderSav.c_str());
                 if(ecritFicher)
                 {
@@ -239,30 +243,30 @@ int main(void)
                     printf("Ecriture de la sauvegarde\n");
                     ecritFicher << "//Sauvegarde du jeu\\" << endl;
                     ecritFicher << "//Experience du joueur\\" << endl;
-                    ecritFicher << mana << endl;
-                    ecritFicher << pvj << endl;
-                    ecritFicher << power << endl;
-                    ecritFicher << level << endl;
-                    ecritFicher << "Ressource joueur" << endl;
-                    ecritFicher << stone << endl;
-                    ecritFicher << iron << endl;
-                    ecritFicher << pp << endl;
-                    ecritFicher << gold << endl;
-                    ecritFicher << am << endl;
-                    ecritFicher << obsi << endl;
-                    ecritFicher << ruby << endl;
-                    ecritFicher << cobalt << endl;
-                    ecritFicher << coal << endl;
-                    ecritFicher << emerald << endl;
-                    ecritFicher << mithril << endl;
-                    ecritFicher << uranium << endl;
-                    ecritFicher << sapphire << endl;
-                    ecritFicher << adamantite << endl;
-                    ecritFicher << plutonium << endl;
-                    ecritFicher << pick << endl;
-                    ecritFicher << house << endl;
-                    ecritFicher << gen << endl;
-                    ecritFicher << fish << endl;
+                    ecritFicher << "int pvj = " << pvj << ";" << endl;
+                    ecritFicher << "int mana = " << mana << ";" << endl;
+                    ecritFicher << "int power = " << power << ";" << endl;
+                    ecritFicher << "int level = " << level << ";" << endl;
+                    ecritFicher << "//Ressource joueur\\" << ";" << endl;
+                    ecritFicher << "int stone = " << stone << ";" << endl;
+                    ecritFicher << "int iron = " <<iron << ";" << endl;
+                    ecritFicher << "int pp = " << pp << ";" << endl;
+                    ecritFicher << "int gold = " << gold << ";" << endl;
+                    ecritFicher << "int am = " << am << ";" << endl;
+                    ecritFicher << "int obsi = " << obsi << ";" << endl;
+                    ecritFicher << "int ruby = " << ruby << ";" << endl;
+                    ecritFicher << "int cobalt = " << cobalt << ";" << endl;
+                    ecritFicher << "int coal = " << coal << ";" << endl;
+                    ecritFicher << "int emerald = " << emerald << ";" << endl;
+                    ecritFicher << "int mithril = " << mithril << ";" << endl;
+                    ecritFicher << "int uranium = " << uranium << ";" << endl;
+                    ecritFicher << "int sapphire = " << sapphire << ";" << endl;
+                    ecritFicher << "int adamantite = " << adamantite << ";" << endl;
+                    ecritFicher << "int plutonium = " << plutonium << ";" << endl;
+                    ecritFicher << "int pick = " << pick << ";" << endl;
+                    ecritFicher << "int house = " << house << ";" << endl;
+                    ecritFicher << "int gen = " << gen << ";" << endl;
+                    ecritFicher << "int fish = " << fish << ";" << endl;
 
 
 
