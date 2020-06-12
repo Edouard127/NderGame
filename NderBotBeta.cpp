@@ -13,6 +13,7 @@
 #include <SDL2/SDL_mixer.h>
 #include <SDL2/SDL.h>
 #include <QtGui/QColor>
+#include <time.h>
 using namespace std;
 SDL_Window *window = NULL;
 SDL_Renderer *renderer = SDL_CreateRenderer(window, -1, 0);
@@ -71,6 +72,7 @@ void drawCell(int colonne, int range){ //J'me souvien meme plus pourquoi c'est l
 //main
 int main(void)
 {
+    srand(time(0));
 
 
    ifstream lireFichier("save.h"); //lire
@@ -112,32 +114,35 @@ int main(void)
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
 
     bool Oui = 0;//les choix pour le jeu
+    int command = 0;
+    int choix_mine = rand() % 15;
+
     int enter;//les choix pour le jeu
     int attack = random(0, Grid_Size-1); //Le nombre de dégat
     int bossX = random(0, Grid_Size-1); //Position du boss
     int bossY = random(0, Grid_Size-1); //Position du boss
-    int mana = 10;
+    int mana = 30;
     int power = 0;
     int level = 0;
-    int pvj = 150; //pvjoueur
-    int pvb = 100; //pvboss
+    int pvj = 109; //pvjoueur
+    int pvb = 109; //pvboss
     int pvrj = pvj -= attack; //pvjr = pvrestantjoueur
     int pvrb = pvb -= attack; //pvrb = pvrestantboss
-    int stone = 0;
-    int pp = 0;
-    int am = 0;
-    int iron = 0;
-    int gold = 0;
-    int obsi = 0;
-    int ruby = 0;
-    int emerald = 0;
-    int sapphire = 0;
-    int cobalt = 0;
-    int mithril = 0;
-    int adamantite = 0;
-    int coal = 0;
-    int uranium = 0;
-    int plutonium = 0;
+    int stone = 0; int r_stone = 0;
+    int pp = 0; int r_pp = 1;
+    int am = 0; int r_am = 2;
+    int iron = 0; int r_iron = 3;
+    int gold = 0; int r_gold = 4;
+    int obsi = 0; int r_obsi = 5;
+    int ruby = 0; int r_ruby = 6;
+    int emerald = 0; int r_emerald = 7;
+    int sapphire = 0; int r_sapphire = 8;
+    int cobalt = 0; int r_cobalt = 9;
+    int mithril = 0; int r_mithril = 10;
+    int adamantite = 0; int r_adamantite = 11;
+    int coal = 0; int r_coal = 12;
+    int uranium = 0; int r_uranium = 13;
+    int plutonium = 0; int r_plutonium = 14;
     int pick = 0;
     int sword = 0;
     int shield = 0;
@@ -151,6 +156,11 @@ int main(void)
     int mi = 0;
     int mineall = 0;
     int mia = 0;
+    int craft = 0;
+    clock_t avantClock = 0;
+    clock_t nowClock = clock();
+            clock_t ecouleClock = nowClock - avantClock;
+            float tempssecond = float(ecouleClock) / float(CLOCKS_PER_SEC);
 
     window = SDL_CreateWindow("NderBot", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,Cell_Size * Grid_Size,Cell_Size * Grid_Size, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -212,21 +222,55 @@ int main(void)
                 }
                 if(q.key.keysym.sym == SDLK_c)
                 {
-                    cout << "Entrez votre commande" << endl;
-                    scanf("%i", &enter);
-
-                    if(enter == (mine or mi) && mana > 0)
+                    cout << "Commande possible: mine [mi], mineall[mia], craft [arguments]\n" << endl;
+                    cin >> enter;
+                    if(enter == (mine or mi))
                     {
-                        stone += random(20, Grid_Size-1);
+
+
+                        stone += random(20, 100*pick);
+                        pp += random(1, 2*pick);
+                        am += random(1, 2*pick);
+                        iron += random(20, 30*pick);
+                        gold += random(20, 25*pick);
+                        obsi += random(20, 20*pick);
+                        ruby += random(20, 20*pick);
+                        emerald += random(20, 20*pick);
+                        sapphire += random(20, 20*pick);
+                        cobalt += random(20, 20*pick);
+                        mithril += random(20, 20*pick);
+                        adamantite += random(20, 20*pick);
+                        coal += random(5, 10*pick);
+                        uranium += random(5, 8*pick);
+                        plutonium += random(4, 6*pick);
+
                         mana -= 1;
-
+                        cout << "Il vous reste " << mana << "mana" << endl;
+                        enter = 0;
+                        if(!window)
+                        {
+                            cout << "[DEBUG]: Un probleme est survenu " << SDL_GetError() << endl;
+                        }
                     }
-                    else if(enter == (mineall or mia) && mana > 0)
+                    if(enter == (mineall or mia))
                     {
-                        stone +=
-                        mana -= 100;
+                        stone += random(mana, mana*mana);
+                        pp += random(mana, mana*mana);
+                        am += random(mana, mana*mana);
+                        iron += random(mana, mana*mana);
+                        gold += random(mana, mana*mana);
+                        obsi += random(mana, mana*mana);
+                        ruby += random(mana, mana*mana);
+                        emerald += random(mana, mana*mana);
+                        sapphire += random(mana, mana*mana);
+                        cobalt += random(mana, mana*mana);
+                        mithril += random(mana, mana*mana);
+                        adamantite += random(mana, mana*mana);
+                        coal += random(mana, mana*mana);
+                        uranium += random(mana, mana*mana);
+                        plutonium += random(mana, mana*mana);
+                        mana -= mana;
                     }
-                    else cout << "Tu n'a plus assez de mana" << endl;
 
                 }
 
@@ -235,38 +279,44 @@ int main(void)
                 {
 
                     string const enderSav("save.h"); //ecrire
-                    ofstream ecritFicher(enderSav.c_str());
-                if(ecritFicher)
+                    ofstream ecritFichier(enderSav.c_str());
+                if(ecritFichier)
                 {
 
 
                     printf("Ecriture de la sauvegarde\n");
-                    ecritFicher << "//Sauvegarde du jeu\\" << endl;
-                    ecritFicher << "//Experience du joueur\\" << endl;
-                    ecritFicher << "int pvj = " << pvj << ";" << endl;
-                    ecritFicher << "int mana = " << mana << ";" << endl;
-                    ecritFicher << "int power = " << power << ";" << endl;
-                    ecritFicher << "int level = " << level << ";" << endl;
-                    ecritFicher << "//Ressource joueur\\" << ";" << endl;
-                    ecritFicher << "int stone = " << stone << ";" << endl;
-                    ecritFicher << "int iron = " <<iron << ";" << endl;
-                    ecritFicher << "int pp = " << pp << ";" << endl;
-                    ecritFicher << "int gold = " << gold << ";" << endl;
-                    ecritFicher << "int am = " << am << ";" << endl;
-                    ecritFicher << "int obsi = " << obsi << ";" << endl;
-                    ecritFicher << "int ruby = " << ruby << ";" << endl;
-                    ecritFicher << "int cobalt = " << cobalt << ";" << endl;
-                    ecritFicher << "int coal = " << coal << ";" << endl;
-                    ecritFicher << "int emerald = " << emerald << ";" << endl;
-                    ecritFicher << "int mithril = " << mithril << ";" << endl;
-                    ecritFicher << "int uranium = " << uranium << ";" << endl;
-                    ecritFicher << "int sapphire = " << sapphire << ";" << endl;
-                    ecritFicher << "int adamantite = " << adamantite << ";" << endl;
-                    ecritFicher << "int plutonium = " << plutonium << ";" << endl;
-                    ecritFicher << "int pick = " << pick << ";" << endl;
-                    ecritFicher << "int house = " << house << ";" << endl;
-                    ecritFicher << "int gen = " << gen << ";" << endl;
-                    ecritFicher << "int fish = " << fish << ";" << endl;
+                    ecritFichier << "//Sauvegarde du jeu\\" << endl;
+                    ecritFichier << "//Experience du joueur\\" << endl;
+                    ecritFichier << "int pvj = " << pvj << ";" << endl;
+                    ecritFichier << "int mana = " << mana << ";" << endl;
+                    ecritFichier << "int power = " << power << ";" << endl;
+                    ecritFichier << "int level = " << level << ";" << endl;
+                    ecritFichier << "//Ressource joueur\\" << ";" << endl;
+                    ecritFichier << "int stone = " << stone << ";" << endl;
+                    ecritFichier << "int iron = " <<iron << ";" << endl;
+                    ecritFichier << "int pp = " << pp << ";" << endl;
+                    ecritFichier << "int gold = " << gold << ";" << endl;
+                    ecritFichier << "int am = " << am << ";" << endl;
+                    ecritFichier << "int obsi = " << obsi << ";" << endl;
+                    ecritFichier << "int ruby = " << ruby << ";" << endl;
+                    ecritFichier << "int cobalt = " << cobalt << ";" << endl;
+                    ecritFichier << "int coal = " << coal << ";" << endl;
+                    ecritFichier << "int emerald = " << emerald << ";" << endl;
+                    ecritFichier << "int mithril = " << mithril << ";" << endl;
+                    ecritFichier << "int uranium = " << uranium << ";" << endl;
+                    ecritFichier << "int sapphire = " << sapphire << ";" << endl;
+                    ecritFichier << "int adamantite = " << adamantite << ";" << endl;
+                    ecritFichier << "int plutonium = " << plutonium << ";" << endl;
+                    ecritFichier << "int pick = " << pick << ";" << endl;
+                    ecritFichier << "int house = " << house << ";" << endl;
+                    ecritFichier << "int gen = " << gen << ";" << endl;
+                    ecritFichier << "int fish = " << fish << ";" << endl;
+                    ecritFichier << "//Emplacement du joueur" << endl;
+                    ecritFichier << "int moveX = " << moveX << ";" << endl;
+                    ecritFichier << "int moveX = " << moveY << ";" << endl;
+                    ecritFichier << "//Emplacement du boss" << endl;
+                    ecritFichier << "int moveX = " << bossX << ";" << endl;
+                    ecritFichier << "int moveX = " << bossY << ";" << endl;
 
 
 
@@ -294,6 +344,10 @@ int main(void)
                     printf("Sapphire %i ||| Adamantite %i ||| Plutonium %i\n--------------------\n", sapphire, adamantite, plutonium);
                     printf("Pickaxe - Level %i ||| House - Level %i ||| Ring - Level %i\n--------------------\n", pick, house, ring);
                     printf("Generator - Level %i ||| Fishing Rod - Level %i\n--------------------\n", gen, fish);
+                }
+                if(tempssecond >= 30)
+                {
+                    mana += 1;
                 }
 
 
@@ -427,4 +481,5 @@ int main(void)
     }
 
     return EXIT_SUCCESS;
+
 }
