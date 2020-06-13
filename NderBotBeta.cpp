@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <fstream>
-#include <debug/save.h>
 #include <SDL2/SDL_net.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
@@ -222,37 +221,79 @@ int main(void)
                 }
                 if(q.key.keysym.sym == SDLK_c)
                 {
+                    enter = 1;
                     cout << "Commande possible: mine [mi], mineall[mia], craft [arguments]\n" << endl;
                     cin >> enter;
-                    if(enter == (mine or mi))
+                    if(enter == (mine or mi) && enter == 1)
                     {
-
-
-                        stone += random(20, 100*pick);
-                        pp += random(1, 2*pick);
-                        am += random(1, 2*pick);
-                        iron += random(20, 30*pick);
-                        gold += random(20, 25*pick);
-                        obsi += random(20, 20*pick);
-                        ruby += random(20, 20*pick);
-                        emerald += random(20, 20*pick);
-                        sapphire += random(20, 20*pick);
-                        cobalt += random(20, 20*pick);
-                        mithril += random(20, 20*pick);
-                        adamantite += random(20, 20*pick);
-                        coal += random(5, 10*pick);
-                        uranium += random(5, 8*pick);
-                        plutonium += random(4, 6*pick);
-
-                        mana -= 1;
-                        cout << "Il vous reste " << mana << "mana" << endl;
-                        enter = 0;
-                        if(!window)
+                        if(choix_mine == r_stone)
                         {
-                            cout << "[DEBUG]: Un probleme est survenu " << SDL_GetError() << endl;
+                             stone += random(20, 100*pick);
                         }
+                        else if(choix_mine == r_pp)
+                        {
+                             pp += random(1, 2*pick);
+                        }
+                        else if(choix_mine == r_am)
+                        {
+                             am += random(1, 2*pick);
+                        }
+                        else if(choix_mine == r_iron)
+                        {
+                             iron += random(20, 30*pick);
+                        }
+                        else if(choix_mine == r_gold)
+                        {
+                             gold += random(20, 25*pick);
+                        }
+                        else if(choix_mine == r_obsi)
+                        {
+                             obsi += random(20, 20*pick);
+                        }
+                        else if(choix_mine == r_ruby)
+                        {
+                             ruby += random(20, 20*pick);
+                        }
+                        else if(choix_mine == r_emerald)
+                        {
+                             emerald += random(20, 20*pick);
+                        }
+                        else if(choix_mine == r_sapphire)
+                        {
+                             sapphire += random(20, 20*pick);
+                        }
+                        else if(choix_mine == r_cobalt)
+                        {
+                             cobalt += random(20, 20*pick);
+                        }
+                        else if(choix_mine == r_mithril)
+                        {
+                             mithril += random(20, 20*pick);
+                        }
+                        else if(choix_mine == r_adamantite)
+                        {
+                             adamantite += random(20, 20*pick);
+                        }
+                        else if(choix_mine == r_coal)
+                        {
+                             coal += random(5, 10*pick);
+                        }
+                        else if(choix_mine == r_uranium)
+                        {
+                             uranium += random(5, 8*pick);
+                        }
+                        else if(choix_mine == r_plutonium)
+                        {
+                             plutonium += random(4, 6*pick);
+                        }
+                        enter = 0;
                     }
-                    if(enter == (mineall or mia))
+                        enter = 1;
+
+
+
+
+                    if(enter == (mineall or mia) && enter == 1)
                     {
                         stone += random(mana, mana*mana);
                         pp += random(mana, mana*mana);
@@ -313,10 +354,10 @@ int main(void)
                     ecritFichier << "int fish = " << fish << ";" << endl;
                     ecritFichier << "//Emplacement du joueur" << endl;
                     ecritFichier << "int moveX = " << moveX << ";" << endl;
-                    ecritFichier << "int moveX = " << moveY << ";" << endl;
+                    ecritFichier << "int moveY = " << moveY << ";" << endl;
                     ecritFichier << "//Emplacement du boss" << endl;
-                    ecritFichier << "int moveX = " << bossX << ";" << endl;
-                    ecritFichier << "int moveX = " << bossY << ";" << endl;
+                    ecritFichier << "int bossX = " << bossX << ";" << endl;
+                    ecritFichier << "int bossY = " << bossY << ";" << endl;
 
 
 
